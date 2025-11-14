@@ -94,7 +94,7 @@ int main(){
 
     cin>>y;
 
-  if(32>month(m,y) && m<13)
+  if(d<=month(m,y) && m<13)
 
   {
 
