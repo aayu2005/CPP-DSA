@@ -125,7 +125,6 @@ int month(int m,int y){
 int main(){
 
     char ch;
-
     int t;
 
     do{ unsigned int d,m,y,sum1=0,sum2=0,sum3=0,k,ans=0,p;  
