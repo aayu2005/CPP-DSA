@@ -1,4 +1,4 @@
-#include<iostream> // nurmology
+#include<iostream> // numerology
 #include<string> 
 #include<windows.h> // for colours
 
@@ -9,6 +9,26 @@ void color(int c) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
 
+int sum(int k){
+    int sum=0;
+    while(k>0){
+
+        int D=k%10;
+
+        sum +=D;
+
+        k/=10;
+
+    }
+return sum;
+
+}
+int reduce(int k){
+    while(k>9){
+        k=sum(k);
+        return k;
+    }
+}
 int name(string s){
     int q;
      int sum=0;
@@ -30,11 +50,11 @@ int name(string s){
             q=4;
             sum=sum+q;
         }
-        else if(s[i]=='e' or s[i]=='h' or s[i]=='n' or s[i]=='x'){
+        else if(s[i]=='e' or s[i]=='h' or s[i]=='n' ){
             q=5;
             sum=sum+q;
         }
-       else if(s[i]=='u' or s[i]=='v' or s[i]=='w'){
+       else if(s[i]=='u' or s[i]=='v' or s[i]=='w' or s[i]=='x'){
             q=6;
             sum=sum+q;
         }
@@ -42,7 +62,7 @@ int name(string s){
             q=7;
             sum=sum+q;
         }
-       else if(s[i]=='b' or s[i]=='k' or s[i]=='r'){
+       else if(s[i]=='f' or  s[i]=='p'){
             q=8;
             sum=sum+q;
         }
@@ -52,82 +72,29 @@ int name(string s){
     }
     return sum;
 }
+
+bool leapyear(int y){
+    return (y%400==0 && y%100==0) || (y%4==0 && y%100!=0);
+}
 int month(int m,int y){
-
-    int t;
-
-    switch(m){
-
-        case 1: t=31;
-        break; 
-
-        case 2: 
-
-        if((y%400==0 && y%100==0) || (y%4==0 && y%100!=0)){
-
-            t=29;
-        }
-
-        else {
-
-            t=28;
-        }
-
-        break; 
-
-        case 3: t=31;
-
-        break; 
-
-        case 4: t=30;
-
-        break; 
-
-        case 5: t=31;
-
-        break; 
-
-        case 6: t=30;
-
-        break; 
-
-        case 7: t=31;
-
-        break; 
-
-        case 8: t=31;
-
-        break; 
-
-        case 9: t=30;
-
-        break; 
-
-        case 10: t=31;
-
-        break; 
-
-        case 11: t=30;
-
-        break; 
-
-        case 12: t=31;
-
-        break; 
-
-
+    int a[]={31,28,31,30,31,30,31,31,30,31,30,31};
+    if(m<1 || m>12){
+        return 0;
+    }
+    if(m==2 && leapyear(y)){
+        return 29;
     }
 
-    return t;
-
+    return a[m-1];
 }
 
 int main(){
 
     char ch;
+
     int t;
 
-    do{ unsigned int d,m,y,sum1=0,sum2=0,sum3=0,k,ans=0,p;  
+    do{ unsigned int d,m,y,p,k,ans;  
 
    color(2); cout<<"# choose what do you want to know?"<<endl;        
     color(3); cout<<"1. Zodiac sign\n2. Mulank (birth no.)\n3. Name numerology"<<endl;
@@ -150,49 +117,6 @@ int main(){
         M=m;
         Y=y;
  
-  for(int i=0;i<2;i++){
-
-        int D=d%10;
-
-        sum1 +=D;
-
-        d/=10;
-
-    }
-
-    for(int i=0;i<2;i++){
-
-        int M=m%10;
-
-        sum2 +=M;
-
-        m/=10;
-
-    }
-
-    for(int i=0;i<4;i++){
-
-        int Y=y%10;
-
-        sum3 +=Y;
-
-        y/=10; 
-
-    }
-
-    k=sum1+sum2+sum3;
-
-    for(int i=0;i<2;i++) {
-
-        int K=k%10;
-
-        ans+=K;
-
-        k/=10;
-
-    } 
-
-
 // Zodiac sign
     if(p==1) {
            if( D<=month(M,Y) && M<13)
@@ -244,6 +168,8 @@ int main(){
 // Mulank (birth no.)
   else if(p==2){
        if( D<=month(M,Y) && M<13){
+        k=sum(d)+sum(m)+sum(y);
+        ans = reduce(k);
 
          switch(ans){
 
@@ -294,15 +220,11 @@ int main(){
 
         else if(p==3){
             string s;
-            int A=0;
+            int A;
             color(8); cout<<"enter your name =";
             cin>>s;
             int T = name(s);
-            for(int i=0;i<2;i++){
-                int r= T%10;
-                A += r;
-                T/=10;
-            }
+            A = sum(T);
            switch(A){
 
           case 1: color(9); cout<<"Name no.: "<<A<<"\nSUN\n# leader,independence,confidence\npositive:\n* Ambitious\n* self driven\nnegative:\n* egoistic\n* dominating\n* impatient\n* doesnt like advice\n";
